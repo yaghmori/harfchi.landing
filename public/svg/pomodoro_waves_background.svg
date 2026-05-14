@@ -1,0 +1,30 @@
+<svg width="840" height="569" viewBox="0 0 840 569" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="softBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="verySoftBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+
+  <!-- left vertical green wave -->
+  <path d="M4 454 C 18 374, 5 260, 36 182 C 48 153, 67 142, 78 164 C 96 199, 83 282, 73 345 C 64 404, 71 462, 50 497 C 35 522, 12 504, 4 454Z"
+        fill="#DFF6CB" opacity="0.46" filter="url(#softBlur)"/>
+
+  <!-- top warm wave -->
+  <path d="M390 61 C 458 108, 529 142, 617 127 C 691 114, 742 63, 789 74 C 816 80, 813 110, 776 132 C 718 168, 646 182, 561 167 C 481 153, 421 128, 376 88 C 354 68, 365 43, 390 61Z"
+        fill="#F3F0D1" opacity="0.34" filter="url(#verySoftBlur)"/>
+
+  <!-- subtle center mint wash -->
+  <path d="M325 322 C 389 288, 470 297, 542 330 C 593 354, 625 387, 599 413 C 558 454, 446 440, 361 411 C 300 390, 270 352, 325 322Z"
+        fill="#EDF9E6" opacity="0.25" filter="url(#verySoftBlur)"/>
+
+  <!-- bottom blue wave -->
+  <path d="M191 430 C 282 417, 338 430, 418 409 C 498 388, 559 344, 648 355 C 732 365, 787 411, 843 410 L 843 490 C 770 485, 704 445, 627 437 C 544 429, 485 461, 401 480 C 319 499, 255 481, 185 490 C 116 499, 58 528, 0 519 L 0 464 C 59 476, 119 440, 191 430Z"
+        fill="#E9F5F8" opacity="0.43" filter="url(#softBlur)"/>
+
+  <!-- lower mint accent -->
+  <path d="M9 493 C 68 514, 118 489, 178 475 C 224 465, 270 463, 314 479 C 252 511, 189 526, 124 526 C 76 526, 33 515, 9 493Z"
+        fill="#EEF7DA" opacity="0.26" filter="url(#verySoftBlur)"/>
+</svg>
