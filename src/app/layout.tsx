@@ -1,16 +1,8 @@
 import { LandingProviders } from "@/components/providers/LandingProviders";
+import { vazirmatn } from "@/lib/fonts/vazirmatn";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
-import { Vazirmatn, Geist } from "next/font/google";
 import "./globals.css";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const vazirmatn = Vazirmatn({
-  subsets: ["arabic", "latin"],
-  variable: "--font-vazirmatn",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -45,7 +37,7 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={cn("h-full light", vazirmatn.variable, "font-sans", geist.variable)}
+      className={cn("h-full light", vazirmatn.variable, "font-sans")}
       suppressHydrationWarning
     >
       <body
