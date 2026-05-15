@@ -1,0 +1,23 @@
+# dependencies
+node_modules
+
+# build output (fresh build in image)
+.next
+out
+
+# git / IDE
+.git
+.github
+.cursor
+.vscode
+*.md
+
+# env and local
+.env
+.env.*
+!.env.example
+
+# logs and misc
+*.log
+.DS_Store
+tsconfig.tsbuildinfo

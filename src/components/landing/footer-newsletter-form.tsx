@@ -14,9 +14,9 @@ export function FooterNewsletterForm() {
 
   return (
     <div className="max-w-md">
-      <p className="mb-2 text-sm font-bold text-slate-700">در جریان باشید</p>
+      <p className="mb-2 text-base font-bold text-slate-700">در جریان باشید</p>
       {sent ? (
-        <p className="text-sm text-emerald-700">ممنون! به‌زودی خبر می‌رسانیم.</p>
+        <p className="text-base text-emerald-700">ممنون! به‌زودی خبر می‌رسانیم.</p>
       ) : (
         <form
           onSubmit={handleSubmit}
@@ -32,11 +32,11 @@ export function FooterNewsletterForm() {
             placeholder="ایمیل خود را وارد کنید"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="min-w-0 flex-1 border-0 bg-transparent px-3 py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
+            className="min-w-0 flex-1 border-0 bg-transparent px-3 py-2.5 text-base text-slate-800 outline-none placeholder:text-slate-400"
           />
           <button
             type="submit"
-            className="shrink-0 bg-[#2563eb] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#1d4ed8]"
+            className="shrink-0 bg-[#2563eb] px-4 py-2.5 text-base font-bold text-white transition hover:bg-[#1d4ed8]"
             aria-label="ثبت ایمیل"
           >
             ثبت

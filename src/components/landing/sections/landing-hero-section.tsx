@@ -35,9 +35,15 @@ const CLOUD_POP: EllipseSpec[] = [
 
 const VB = { w: 1440, h: 280 };
 
+/** User-space Y where the visible sky ends and an opaque white “shore” begins (matches design + blur bleed). */
+const CLOUD_FILL_START_Y = 168;
+
+/** Fraction of stack height covered by the CSS cap — same ratio as SVG viewBox so it scales with width. */
+const CLOUD_BOTTOM_WHITE_FRAC = (VB.h - CLOUD_FILL_START_Y) / VB.h;
+
 /**
- * One wide SVG with uniform scaling (`meet`) + aspect-ratio wrapper so domes stay round.
- * Layered groups + blur read as volumetric clouds instead of a stretched straight band.
+ * Wide SVG with uniform scaling (`meet`) + `aspect-1440/280` so ellipses stay round.
+ * Opaque plate under blur + final SVG rect + CSS bottom cap stop sky/page bg showing through.
  */
 function HeroCloudWaveStack() {
   const reactId = useId().replace(/:/g, "");
@@ -58,29 +64,47 @@ function HeroCloudWaveStack() {
 
   return (
     <div
-      className="pointer-events-none relative aspect-1440/280 w-full min-w-0 shrink-0"
+      className="pointer-events-none relative aspect-1440/280 w-full min-w-0 shrink-0 overflow-hidden"
       aria-hidden
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${VB.w} ${VB.h}`}
         preserveAspectRatio="xMidYMax meet"
-        className="absolute inset-0 h-full w-full text-white"
+        overflow="hidden"
+        className="absolute inset-0 block h-full w-full text-white"
       >
         <defs>
-          <filter id={blurSoft} x="-10%" y="-20%" width="120%" height="140%">
+          <filter
+            id={blurSoft}
+            x="-20%"
+            y="-35%"
+            width="140%"
+            height="170%"
+            colorInterpolationFilters="sRGB"
+          >
             <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" />
           </filter>
-          <filter id={blurMid} x="-8%" y="-8%" width="116%" height="116%">
+          <filter
+            id={blurMid}
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+            colorInterpolationFilters="sRGB"
+          >
             <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" />
           </filter>
         </defs>
+
+        {/* Full-width opaque plate under all layers (blur + translucent groups composite on white, not sky). */}
+        <rect x="0" y="95" width={VB.w} height={VB.h - 95} fill="#ffffff" />
 
         {/* Distant mass — shifted + blurred */}
         <g
           transform="translate(24 10)"
           className="text-sky-50"
-          opacity={0.72}
+          opacity={0.82}
           filter={`url(#${blurSoft})`}
         >
           {ellipses(CLOUD_PUFFS, "far")}
@@ -88,7 +112,7 @@ function HeroCloudWaveStack() {
         <g
           transform="translate(-132 -0)"
           className="text-white"
-          opacity={0.55}
+          opacity={0.62}
           filter={`url(#${blurSoft})`}
         >
           {ellipses(CLOUD_PUFFS, "far2")}
@@ -98,20 +122,33 @@ function HeroCloudWaveStack() {
         <g
           transform="translate(12 0)"
           className="text-white"
-          opacity={0.82}
+          opacity={0.88}
           filter={`url(#${blurMid})`}
         >
           {ellipses(CLOUD_PUFFS, "mid")}
           {ellipses(CLOUD_POP, "midp")}
         </g>
 
-        {/* Crisp foreground + base */}
-        <g className="text-white" opacity={0.98}>
-          <rect x="0" y="188" width={VB.w} height="92" fill="currentColor" />
+        {/* Foreground puffs (cap rect below paints opaque white). */}
+        <g className="text-white">
           {ellipses(CLOUD_PUFFS, "fg")}
           {ellipses(CLOUD_POP, "fgp")}
         </g>
+
+        {/* Hard straight fill inside SVG (CSS layer below repeats the same ratio for subpixel safety). */}
+        <rect
+          x="0"
+          y={CLOUD_FILL_START_Y}
+          width={VB.w}
+          height={VB.h - CLOUD_FILL_START_Y}
+          fill="#ffffff"
+        />
       </svg>
+      {/* Paints over the bottom band so uneven puff bottoms + filter fringe never reveal hero/page bg. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 bg-white"
+        style={{ height: `${CLOUD_BOTTOM_WHITE_FRAC * 100}%` }}
+      />
     </div>
   );
 }
@@ -120,26 +157,20 @@ export function LandingHeroSection() {
   return (
     <section
       id="top"
-      className="relative isolate flex min-h-svh w-full min-w-0 flex-col overflow-x-hidden bg-linear-to-b from-sky-400 via-sky-300 to-sky-200 pb-0 pt-4 sm:pt-6"
+      className=" relative   w-full  xl:max-h-svh  min-w-0 flex-col overflow-hidden  bg-linear-to-b from-sky-100 via-sky-200 to-sky-400 pb-0 pt-4 sm:pt-6"
     >
+      {/* Inset + clip so blurred orbs and transforms cannot widen the document (RTL / flex min-width). */}
       <div
+        className="pointer-events-none absolute  inset-0 overflow-hidden"
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_0%,rgba(255,255,255,0.35)_0%,transparent_55%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-24 top-[18%] h-72 w-72 rounded-full bg-sky-200/50 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-20 top-[32%] h-80 w-80 rounded-full bg-sky-100/45 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/3 top-[45%] h-56 w-96 max-w-[60vw] -translate-x-1/2 rounded-full bg-sky-300/35 blur-3xl"
-      />
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_72%_at_50%_0%,rgba(255,255,255,0.52)_0%,rgba(255,255,255,0.14)_38%,transparent_56%)]" />
+        <div className="absolute -left-24 top-[18%] h-72 w-72 rounded-full bg-sky-200/55 blur-3xl" />
+        <div className="absolute -right-20 top-[32%] h-80 w-80 rounded-full bg-sky-100/50 blur-3xl" />
+        <div className="absolute left-1/3 top-[45%] h-56 w-96 max-w-[60vw] -translate-x-1/2 rounded-full bg-sky-300/35 blur-3xl" />
+      </div>
 
-      <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col items-center px-4 pb-6 pt-6 sm:pb-8 sm:pt-8">
+      <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col items-center px-4 pb-6 pt-36 sm:pb-8 sm:pt-8 ">
         <Link
           href="/"
           className="relative -mt-1 inline-flex sm:mt-0"
@@ -150,7 +181,7 @@ export function LandingHeroSection() {
             alt="حرف چی"
             width={320}
             height={84}
-            className="h-17 w-auto drop-shadow-[0_8px_24px_rgba(15,23,42,0.15)] sm:h-19 md:h-24"
+            className="h-22 w-auto drop-shadow-[0_8px_24px_rgba(15,23,42,0.15)] sm:h-23 "
             priority
           />
         </Link>
@@ -166,20 +197,24 @@ export function LandingHeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-2 pt-6 sm:pb-3 sm:pt-8 md:pt-10">
+      <div className="relative z-10 flex w-full shrink-0 justify-center px-4 pb-10 ">
         <LandingHeroStartButton />
       </div>
 
-      <Image
-        src={landingBrand.heroPromotional}
-        alt="هیجان تازه"
-        width={1500}
-        height={1200}
-        className="h-auto w-full self-center max-w-xl origin-bottom object-contain scale-[1.04] sm:max-w-2xl sm:scale-105 md:max-w-3xl md:scale-110 lg:max-w-4xl lg:scale-[1.1]"
-        priority
-      />
-      <div className="pointer-events-none relative z-20 -mt-11 w-full max-w-none shrink-0 sm:-mt-14 md:-mt-15 lg:-mt-10">
+      <div className="relative z-10 flex w-full min-w-0 justify-center overflow-visible">
+        <Image
+          src={landingBrand.heroPromotional}
+          alt="هیجان تازه"
+          width={1500}
+          height={1200}
+          className="h-auto w-full min-w-0 self-center max-w-xl origin-bottom object-contain scale-[1.04] sm:max-w-2xl sm:scale-105 md:max-w-3xl md:scale-110 lg:max-w-4xl lg:scale-[1.1]"
+          priority
+        />
+      </div>
+      <div className="pointer-events-none relative z-20 -mb-px -mt-11 w-full min-w-0 max-w-none shrink-0 overflow-hidden sm:-mt-14 md:-mt-15 lg:-mt-10">
         <HeroCloudWaveStack />
+        {/* Flush straight seam into the white features section (no sky / page bg gap) */}
+        <div className="h-px w-full bg-white" aria-hidden />
       </div>
     </section>
   );

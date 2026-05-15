@@ -1,8 +1,10 @@
 import { LandingProviders } from "@/components/providers/LandingProviders";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
-import { Vazirmatn } from "next/font/google";
+import { Vazirmatn, Geist } from "next/font/google";
 import "./globals.css";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic", "latin"],
@@ -43,7 +45,7 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={cn("h-full light", vazirmatn.variable)}
+      className={cn("h-full light", vazirmatn.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <body

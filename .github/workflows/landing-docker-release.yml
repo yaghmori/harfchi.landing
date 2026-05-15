@@ -1,0 +1,70 @@
+# - Push to `main`: retag GHCR `dev-latest` as production (`prod-latest`, `prod-<sha>`).
+#   Use after merging `dev` → `main` so `dev-latest` matches what you intend to ship.
+# - Pull request into `main`: build the Dockerfile (no registry push) to verify the image builds.
+#
+# Optional: add repository secret `LANDING_PORTAINER_WEBHOOK_URL` and a step to POST it after promote.
+
+name: Landing — PR verify & prod promote
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: landing-release-${{ github.repository }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: harfchi-landing
+
+jobs:
+  docker-build-verify:
+    name: Docker build (PR)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          cache-from: type=gha,scope=harfchi-landing-pr
+          cache-to: type=gha,mode=max,scope=harfchi-landing-pr
+          provenance: false
+
+  promote-to-prod:
+    name: Promote dev → prod (GHCR)
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Retag and push production tags
+        run: |
+          set -eux
+          owner_lc=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          short_sha=$(echo "${{ github.sha }}" | cut -c1-7)
+          img="${{ env.IMAGE_NAME }}"
+          base="${{ env.REGISTRY }}/${owner_lc}/${img}"
+          docker pull "${base}:dev-latest"
+          docker tag "${base}:dev-latest" "${base}:prod-latest"
+          docker tag "${base}:dev-latest" "${base}:prod-${short_sha}"
+          docker push "${base}:prod-latest"
+          docker push "${base}:prod-${short_sha}"

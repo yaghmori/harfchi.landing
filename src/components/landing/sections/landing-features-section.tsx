@@ -38,24 +38,27 @@ const FEATURE_CARDS = [
 
 export function LandingFeaturesSection() {
   return (
-    <section id="features" className="bg-white py-16 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4">
+    <section
+      id="features"
+      className="bg-white  sm:py-16  lg:flex xl:h-svh xl:min-h-svh  xl:max-h-svh lg:flex-col lg:justify-center lg:py-12 xl:py-16"
+    >
+      <div className="mx-auto   w-full max-w-7xl px-6 sm:px-8 md:px-10 pb-20 lg:px-12 xl:px-8">
         <div className="text-center">
-          <h2 className="font-heading text-2xl font-extrabold text-[#312e81] sm:text-3xl">
+          <h2 className="font-heading text-3xl  font-extrabold text-[#312e81] sm:text-5xl">
             سیستمی که به مهارت پاداش می‌دهد
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-sm text-slate-600">
+          <p className="mx-auto mt-5 max-w-lg text-base text-slate-600 sm:text-2xl">
             هر دور با حروف تازه؛ رقابت عادلانه و سرگرم‌کننده.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid gap-12 xl:gap-5  sm:grid-cols-2 xl:grid-cols-4">
           {FEATURE_CARDS.map((card) => (
             <Link
               key={card.id}
               href="#download"
               aria-label={`${card.title}. ${card.description}`}
-              className="group relative block aspect-7/11 w-full overflow-hidden rounded-[2rem] shadow-lg ring-1 ring-black/10 transition duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:ring-black/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
+              className="group relative block  aspect-square xl:aspect-8/10 w-full overflow-hidden rounded-[2rem] shadow-lg ring-1 ring-black/10 transition duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:ring-black/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
             >
               <Image
                 src={card.image}

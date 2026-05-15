@@ -42,7 +42,7 @@ export function LandingNav() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-white/50 bg-white/70 backdrop-blur-xl supports-backdrop-filter:bg-white/55">
-      <div className="mx-auto flex h-16 w-full max-w-[100vw] items-center justify-between gap-4 px-4 sm:h-18 sm:px-6 lg:px-10">
+      <div className="mx-auto flex h-16 w-full min-w-0 max-w-full items-center justify-between gap-4 px-4 sm:h-18 sm:px-6 lg:px-10">
         <Link
           href="/"
           className="inline-flex min-w-0 shrink-0 items-center"

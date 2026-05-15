@@ -7,12 +7,12 @@ export function LandingStatsSection() {
         </p>
         <div className="grid w-full max-w-lg grid-cols-3 gap-4 text-center sm:gap-8">
           <div>
-            <p className="text-xl font-black sm:text-2xl">۴۸۰هزار+</p>
-            <p className="text-xs text-violet-200 sm:text-sm">کاربر</p>
+            <p className="text-xl font-black sm:text-2xl">۲۰هزار+</p>
+            <p className="text-xs text-violet-200 sm:text-sm">دانلود</p>
           </div>
           <div>
-            <p className="text-xl font-black sm:text-2xl">۳۵هزار+</p>
-            <p className="text-xs text-violet-200 sm:text-sm">بازخورد مثبت</p>
+            <p className="text-xl font-black sm:text-2xl">۳هزار+</p>
+            <p className="text-xs text-violet-200 sm:text-sm">نظر مثبت</p>
           </div>
           <div>
             <p className="text-xl font-black sm:text-2xl">۵٫۰</p>
