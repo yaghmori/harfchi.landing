@@ -1,6 +1,6 @@
-# - Push to `main`: retag GHCR `dev-latest` as production (`prod-latest`, `prod-<sha>`).
-#   Use after merging `dev` → `main` so `dev-latest` matches what you intend to ship.
-# - Pull request into `main`: build the Dockerfile (no registry push) to verify the image builds.
+# - Push to `master`: retag GHCR `dev-latest` as production (`prod-latest`, `prod-<sha>`).
+#   Use after merging `dev` → `master` so `dev-latest` matches what you intend to ship.
+# - Pull request into `master`: build the Dockerfile (no registry push) to verify the image builds.
 #
 # Optional: add repository secret `LANDING_PORTAINER_WEBHOOK_URL` and a step to POST it after promote.
 
@@ -8,9 +8,9 @@ name: Landing — PR verify & prod promote
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 concurrency:

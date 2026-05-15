@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useId } from "react";
 import { landingBrand } from "../landing-brand";
+import { LandingHeroIllustration } from "../hero-illustration/landing-hero-illustration";
 import { LandingHeroStartButton } from "./landing-hero-start-button";
 
 type EllipseSpec = { cx: number; cy: number; rx: number; ry: number };
@@ -201,15 +202,8 @@ export function LandingHeroSection() {
         <LandingHeroStartButton />
       </div>
 
-      <div className="relative z-10 flex w-full min-w-0 justify-center overflow-visible">
-        <Image
-          src={landingBrand.heroPromotional}
-          alt="هیجان تازه"
-          width={1500}
-          height={1200}
-          className="h-auto w-full min-w-0 self-center max-w-xl origin-bottom object-contain scale-[1.04] sm:max-w-2xl sm:scale-105 md:max-w-3xl md:scale-110 lg:max-w-4xl lg:scale-[1.1]"
-          priority
-        />
+      <div className="relative z-10 flex w-full min-w-0 justify-center overflow-visible px-4">
+        <LandingHeroIllustration className="w-full max-w-xl scale-[1.04] sm:max-w-2xl sm:scale-105 md:max-w-3xl md:scale-110 lg:max-w-4xl lg:scale-[1.1]" />
       </div>
       <div className="pointer-events-none relative z-20 -mb-px -mt-11 w-full min-w-0 max-w-none shrink-0 overflow-hidden sm:-mt-14 md:-mt-15 lg:-mt-10">
         <HeroCloudWaveStack />
