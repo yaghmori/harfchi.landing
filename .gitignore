@@ -18,6 +18,10 @@
 # production
 /build
 
+# app binaries (place APK at downloads/harfchi.apk or set APP_DOWNLOAD_PATH)
+/downloads/*
+!/downloads/.gitkeep
+
 # misc
 .DS_Store
 *.pem

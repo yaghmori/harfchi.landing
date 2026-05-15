@@ -1,3 +1,4 @@
+import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SVGProps } from "react";
@@ -174,12 +175,12 @@ export function LandingSiteFooter() {
 
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row">
           <p>© {new Date().getFullYear()} حرف چی. تمامی حقوق محفوظ است.</p>
-          <p className="flex items-center gap-2 text-slate-600">
+          <p className="flex items-center gap-3 text-base font-medium text-slate-700 sm:text-lg">
             <span
-              className="flex size-8 items-center justify-center rounded-md bg-[#2563eb] text-sm text-white"
+              className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#2563eb] text-white shadow-sm shadow-blue-500/30"
               aria-hidden
             >
-              ♥
+              <Heart className="size-5 fill-current" strokeWidth={1.75} />
             </span>
             ساخته‌شده با خلاقیت برای فردایی بهتر.
           </p>

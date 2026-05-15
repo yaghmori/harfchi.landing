@@ -11,7 +11,8 @@
   --app-bg: #f3f4f9;
   --app-bg-gradient-end: #e8eaf5;
   --app-card: #ffffff;
-  --app-input: #e5e7f2;
+  --app-input: #eef0f8;
+  --app-secondary: #f8f9fa;
 
   --card: var(--app-card);
   --muted: #eef0f8;
@@ -24,8 +25,8 @@
   --popover-foreground: #1e293b;
   --primary: #630ed4;
   --primary-foreground: #ffffff;
-  --secondary: var(--app-input);
-  --secondary-foreground: #1e293b;
+  --secondary: var(--app-secondary);
+  --secondary-foreground: var(--muted-foreground);
   --muted-foreground: #64748b;
   --destructive: oklch(0.577 0.245 27.325);
   --border: rgb(148 163 184 / 0.22);
