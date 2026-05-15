@@ -1,0 +1,35 @@
+# Verify the Dockerfile on PRs into production branches (build only, no registry push).
+# Does not run when a PR is closed/merged — avoids a redundant build alongside promote.
+
+name: Landing — Docker PR verify
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: landing-pr-verify-${{ github.repository }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  docker-build-verify:
+    name: Docker build (PR)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          cache-from: type=gha,scope=harfchi-landing-pr
+          cache-to: type=gha,mode=max,scope=harfchi-landing-pr
+          provenance: false

@@ -1,0 +1,47 @@
+# Push to `main` or `master`: retag GHCR `dev-latest` → `prod-latest` / `prod-<sha>` (no image build).
+# Run after merging `dev` so `dev-latest` is the image you intend to ship.
+#
+# Optional: `LANDING_PORTAINER_WEBHOOK_URL` secret + webhook step after promote.
+
+name: Landing — promote to prod
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: landing-promote-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: harfchi-landing
+
+jobs:
+  promote-to-prod:
+    name: Promote dev → prod (GHCR)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Retag and push production tags
+        run: |
+          set -eux
+          owner_lc=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          short_sha=$(echo "${{ github.sha }}" | cut -c1-7)
+          img="${{ env.IMAGE_NAME }}"
+          base="${{ env.REGISTRY }}/${owner_lc}/${img}"
+          docker pull "${base}:dev-latest"
+          docker tag "${base}:dev-latest" "${base}:prod-latest"
+          docker tag "${base}:dev-latest" "${base}:prod-${short_sha}"
+          docker push "${base}:prod-latest"
+          docker push "${base}:prod-${short_sha}"

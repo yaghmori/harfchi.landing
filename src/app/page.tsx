@@ -1,4 +1,10 @@
 import { HarfchiLanding } from "@/components/landing/harfchi-simple-landing";
+import { JsonLd } from "@/components/seo/json-ld";
+import { createHomeJsonLd } from "@/lib/seo/json-ld";
+import { createHomeMetadata } from "@/lib/seo/metadata";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = createHomeMetadata();
 
 const cafeBazaarUrl = process.env.NEXT_PUBLIC_CAFE_BAZAAR_URL;
 const sibcheUrl = process.env.NEXT_PUBLIC_SIBCHE_URL;
@@ -7,10 +13,13 @@ const pwaPlayUrl =
 
 export default function HomePage() {
   return (
-    <HarfchiLanding
-      cafeBazaarUrl={cafeBazaarUrl}
-      sibcheUrl={sibcheUrl}
-      pwaPlayUrl={pwaPlayUrl}
-    />
+    <>
+      <JsonLd data={createHomeJsonLd()} />
+      <HarfchiLanding
+        cafeBazaarUrl={cafeBazaarUrl}
+        sibcheUrl={sibcheUrl}
+        pwaPlayUrl={pwaPlayUrl}
+      />
+    </>
   );
 }

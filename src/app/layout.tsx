@@ -1,25 +1,11 @@
 import { LandingProviders } from "@/components/providers/LandingProviders";
 import { vazirmatn } from "@/lib/fonts/vazirmatn";
+import { createRootMetadata } from "@/lib/seo/metadata";
 import { cn } from "@/lib/utils";
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: {
-    default: "حرف چی",
-    template: "%s · حرف چی",
-  },
-  description: "بازی چندنفره اسم و فامیل با حروف فارسی",
-  applicationName: "حرف چی",
-  formatDetection: {
-    telephone: false,
-  },
-  icons: {
-    icon: [{ url: "/brand/app-icon-safe.png", type: "image/png" }],
-    shortcut: ["/brand/app-icon-safe.png"],
-    apple: [{ url: "/brand/app-icon-safe.png", type: "image/png" }],
-  },
-};
+export const metadata = createRootMetadata();
 
 export const viewport: Viewport = {
   themeColor: "#630ed4",

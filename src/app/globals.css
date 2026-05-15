@@ -196,3 +196,75 @@
     animation: none;
   }
 }
+
+/* Hero cloud strip — horizontal drift + slight downward swell (no upward motion: avoids top clip). */
+@keyframes landing-hero-cloud-drift-slow {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-22px, 2px);
+  }
+  50% {
+    transform: translate(-6px, 0);
+  }
+  75% {
+    transform: translate(18px, 3px);
+  }
+}
+
+@keyframes landing-hero-cloud-drift-mid {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(14px, 3px);
+  }
+  66% {
+    transform: translate(-16px, 1px);
+  }
+}
+
+@keyframes landing-hero-cloud-drift-fast {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(-12px, 4px);
+  }
+  70% {
+    transform: translate(8px, 2px);
+  }
+}
+
+.landing-hero-cloud-drift-slow,
+.landing-hero-cloud-drift-mid,
+.landing-hero-cloud-drift-fast {
+  transform-origin: 720px 140px;
+  will-change: transform;
+}
+
+.landing-hero-cloud-drift-slow {
+  animation: landing-hero-cloud-drift-slow 20s ease-in-out infinite;
+}
+
+.landing-hero-cloud-drift-mid {
+  animation: landing-hero-cloud-drift-mid 14s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.landing-hero-cloud-drift-fast {
+  animation: landing-hero-cloud-drift-fast 9s ease-in-out infinite;
+  animation-delay: -2.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-cloud-drift-slow,
+  .landing-hero-cloud-drift-mid,
+  .landing-hero-cloud-drift-fast {
+    animation: none;
+  }
+}

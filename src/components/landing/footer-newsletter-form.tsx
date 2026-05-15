@@ -16,7 +16,9 @@ export function FooterNewsletterForm() {
     <div className="max-w-md">
       <p className="mb-2 text-base font-bold text-slate-700">در جریان باشید</p>
       {sent ? (
-        <p className="text-base text-emerald-700">ممنون! به‌زودی خبر می‌رسانیم.</p>
+        <p className="text-base text-emerald-700">
+          ممنون! به‌زودی خبرهای جدید رو برات میفرستیم
+        </p>
       ) : (
         <form
           onSubmit={handleSubmit}
