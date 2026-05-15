@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useId } from "react";
-import { landingBrand } from "../landing-brand";
 import { LandingHeroIllustration } from "../hero-illustration/landing-hero-illustration";
+import { landingBrand } from "../landing-brand";
 import { LandingHeroStartButton } from "./landing-hero-start-button";
 
 type EllipseSpec = { cx: number; cy: number; rx: number; ry: number };
@@ -111,7 +111,7 @@ function HeroCloudWaveStack() {
           {ellipses(CLOUD_PUFFS, "far")}
         </g>
         <g
-          transform="translate(-132 -0)"
+          transform="translate(102 5)"
           className="text-white"
           opacity={0.62}
           filter={`url(#${blurSoft})`}

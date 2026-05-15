@@ -51,7 +51,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  /* Persian-first UI: Vazirmatn (set on <html> via next/font variable). */
+  /* Persian-first UI: bundled Vazirmatn (local next/font on <html>). */
   --font-sans: var(--font-vazirmatn), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-vazirmatn), ui-sans-serif, system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
