@@ -1,4 +1,4 @@
-# Build and push the landing image when `dev` is updated.
+# Build and push the landing image when `dev` is updated (never on main/master).
 # Requires: Settings → Actions → General → Workflow permissions → Read and write (for GHCR),
 # or rely on packages:write below with GITHUB_TOKEN.
 
