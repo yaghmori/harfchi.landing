@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useId } from "react";
 import { LandingHeroIllustration } from "../hero-illustration/landing-hero-illustration";
 import { landingBrand } from "../landing-brand";
 import { LandingHeroStartButton } from "./landing-hero-start-button";
@@ -41,17 +42,14 @@ const CLOUD_FILL_START_Y = 168;
 /** Fraction of stack height covered by the CSS cap — same ratio as SVG viewBox so it scales with width. */
 const CLOUD_BOTTOM_WHITE_FRAC = (VB.h - CLOUD_FILL_START_Y) / VB.h;
 
-/** Stable SVG filter ids (single hero per page). */
-const CLOUD_BLUR_SOFT_ID = "hc-hero-cloud-soft";
-const CLOUD_BLUR_MID_ID = "hc-hero-cloud-mid";
-
 /**
- * Wide SVG with uniform scaling (`meet`) + fixed aspect ratio so ellipses stay round.
+ * Wide SVG with uniform scaling (`meet`) + `aspect-1440/280` so ellipses stay round.
  * Opaque plate under blur + final SVG rect + CSS bottom cap stop sky/page bg showing through.
  */
 function HeroCloudWaveStack() {
-  const blurSoft = CLOUD_BLUR_SOFT_ID;
-  const blurMid = CLOUD_BLUR_MID_ID;
+  const reactId = useId().replace(/:/g, "");
+  const blurSoft = `hc-cloud-soft-${reactId}`;
+  const blurMid = `hc-cloud-mid-${reactId}`;
 
   const ellipses = (specs: EllipseSpec[], keyPrefix: string) =>
     specs.map((e, i) => (
@@ -68,7 +66,6 @@ function HeroCloudWaveStack() {
   return (
     <div
       className="pointer-events-none relative aspect-1440/280 w-full min-w-0 shrink-0 overflow-hidden"
-      style={{ aspectRatio: `${VB.w} / ${VB.h}` }}
       aria-hidden
     >
       <svg
@@ -82,9 +79,9 @@ function HeroCloudWaveStack() {
           <filter
             id={blurSoft}
             x="-20%"
-            y="-15%"
+            y="-35%"
             width="140%"
-            height="70%"
+            height="170%"
             colorInterpolationFilters="sRGB"
           >
             <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" />
@@ -106,7 +103,7 @@ function HeroCloudWaveStack() {
 
         {/* Distant mass — shifted + blurred */}
         <g
-          transform="translate(44 20)"
+          transform="translate(24 10)"
           className="text-sky-50"
           opacity={0.82}
           filter={`url(#${blurSoft})`}
@@ -114,7 +111,7 @@ function HeroCloudWaveStack() {
           {ellipses(CLOUD_PUFFS, "far")}
         </g>
         <g
-          transform="translate(-32 -0)"
+          transform="translate(102 5)"
           className="text-white"
           opacity={0.62}
           filter={`url(#${blurSoft})`}
@@ -161,7 +158,7 @@ export function LandingHeroSection() {
   return (
     <section
       id="top"
-      className="relative w-full min-w-0 bg-linear-to-b from-sky-100 via-sky-200 to-sky-400 pb-0 pt-4 sm:pt-6"
+      className=" relative   w-full  xl:max-h-svh  min-w-0 flex-col overflow-hidden  bg-linear-to-b from-sky-100 via-sky-200 to-sky-400 pb-0 pt-4 sm:pt-6"
     >
       {/* Inset + clip so blurred orbs and transforms cannot widen the document (RTL / flex min-width). */}
       <div
