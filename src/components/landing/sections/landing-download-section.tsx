@@ -1,61 +1,111 @@
-import { LandingStoreBadges } from "../landing-store-badges";
+import type { ReactNode } from "react";
+import { DownloadChannelButton } from "../download/download-channel-button";
+import { DownloadPlatformLogo } from "../download/download-platform-logo";
+import {
+  AndroidDirectIcon,
+  CafeBazaarIcon,
+  PwaWebIcon,
+  SibcheIcon,
+} from "../download/store-icons";
+
+const DEFAULT_PWA_PLAY_URL = "https://play.harfchi.ir";
+
+type PlatformVariant = "android" | "ios" | "web";
 
 type LandingDownloadSectionProps = {
-  gameAppUrl?: string;
-  googlePlayUrl?: string;
-  appStoreUrl?: string;
+  cafeBazaarUrl?: string;
+  sibcheUrl?: string;
+  pwaPlayUrl?: string;
 };
 
-export function LandingDownloadSection({
-  gameAppUrl,
-  googlePlayUrl,
-  appStoreUrl,
-}: LandingDownloadSectionProps) {
-  const hasStores = Boolean(googlePlayUrl || appStoreUrl);
-  const hasAny = hasStores || Boolean(gameAppUrl);
+function PlatformColumn({
+  variant,
+  children,
+  className,
+}: {
+  variant: PlatformVariant;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <article
+      className={[
+        "flex flex-col items-center md:border-e md:border-border/80 md:pe-6 lg:pe-10",
+        "last:md:border-e-0 last:md:pe-0",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <DownloadPlatformLogo variant={variant} />
+      <div className="mt-8 flex w-full max-w-[19rem] flex-col gap-3 sm:max-w-xs">
+        {children}
+      </div>
+    </article>
+  );
+}
 
+export function LandingDownloadSection({
+  cafeBazaarUrl,
+  sibcheUrl,
+  pwaPlayUrl = DEFAULT_PWA_PLAY_URL,
+}: LandingDownloadSectionProps) {
   return (
     <section
       id="download"
       aria-labelledby="download-heading"
-      className="scroll-mt-[4.5rem] bg-[#ece8f7] py-14 sm:scroll-mt-20 sm:py-20"
+      className="scroll-mt-[4.5rem] bg-neutral-50 py-16 sm:scroll-mt-20 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl px-4 text-center">
-        <h2
-          id="download-heading"
-          className="font-heading text-2xl font-extrabold text-[#312e81] sm:text-3xl"
-        >
-          دانلود حرف چی
-        </h2>
-        <p className="mx-auto mt-2 max-w-lg text-sm text-slate-600 sm:text-base">
-          اپ را نصب کنید و با دوستانتان دور بعدی را شروع کنید.
-        </p>
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2
+            id="download-heading"
+            className="font-heading text-2xl font-extrabold text-foreground sm:text-3xl md:text-4xl"
+          >
+            دانلود اپلیکیشن حرف چی
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            اندروید، iOS یا نسخهٔ وب (PWA) — هر کدام را که می‌خواهید انتخاب
+            کنید.
+          </p>
+        </div>
 
-        <div className="mt-10 flex flex-col items-center gap-4">
-          {gameAppUrl ? (
-            <a
-              href={gameAppUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-[#630ed4] px-6 text-sm font-bold text-white shadow-lg ring-1 ring-violet-400/30 transition hover:bg-[#5512b8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#312e81] sm:h-12 sm:text-base"
-            >
-              بازی در مرورگر
-            </a>
-          ) : null}
+        <div className="mt-14 md:mt-16">
+          <div className="grid items-start justify-items-center gap-14 md:grid-cols-3 md:gap-6 lg:gap-10">
+            <PlatformColumn variant="android">
+              <DownloadChannelButton
+                href="/download"
+                label="دانلود مستقیم"
+                icon={<AndroidDirectIcon />}
+              />
+              <DownloadChannelButton
+                href={cafeBazaarUrl ?? "#"}
+                label="دانلود از بازار"
+                icon={<CafeBazaarIcon />}
+                external={Boolean(cafeBazaarUrl)}
+                disabled={!cafeBazaarUrl}
+              />
+            </PlatformColumn>
 
-          {hasStores ? (
-            <LandingStoreBadges
-              googlePlayUrl={googlePlayUrl}
-              appStoreUrl={appStoreUrl}
-              variant="onLight"
-            />
-          ) : null}
+            <PlatformColumn variant="ios">
+              <DownloadChannelButton
+                href={sibcheUrl ?? "#"}
+                label="دانلود از سیبچه"
+                icon={<SibcheIcon />}
+                external={Boolean(sibcheUrl)}
+                disabled={!sibcheUrl}
+              />
+            </PlatformColumn>
 
-          {!hasAny ? (
-            <p className="text-sm text-slate-600">
-              لینک‌های فروشگاه به‌زودی اینجا قرار می‌گیرند.
-            </p>
-          ) : null}
+            <PlatformColumn variant="web">
+              <DownloadChannelButton
+                href={pwaPlayUrl}
+                label="نسخه وب اپلیکیشن"
+                icon={<PwaWebIcon />}
+                external
+              />
+            </PlatformColumn>
+          </div>
         </div>
       </div>
     </section>

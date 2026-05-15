@@ -49,9 +49,7 @@ const buttonLayeredShellVariants = cva(
         ),
         destructive: ["text-white", shellRestShadowRaisedBold].join(" "),
         outline: ["text-foreground", shellRestShadowRaised].join(" "),
-        secondary: ["text-secondary-foreground", shellRestShadowRaised].join(
-          " ",
-        ),
+        secondary: ["text-muted-foreground", shellRestShadowRaised].join(" "),
       },
       size: {
         default: "h-11 min-h-11 rounded-full px-4",
@@ -97,7 +95,7 @@ const depthLayerVariants = cva(
           "group-disabled:translate-y-0.5",
         ].join(" "),
         secondary: [
-          "bg-neutral-300/85 dark:bg-neutral-800/90",
+          "bg-neutral-200/70 dark:bg-neutral-800/90",
           "translate-y-0.5",
           "group-active:translate-y-0 motion-reduce:group-active:translate-y-0.5",
           "group-disabled:translate-y-0.5",
@@ -127,9 +125,9 @@ const faceLayerVariants = cva(
           "group-active:border-border/90 group-active:from-background group-active:via-muted group-active:to-muted/82 dark:group-active:from-neutral-700 dark:group-active:via-muted dark:group-active:to-neutral-800",
         ].join(" "),
         secondary: [
-          "shadow-[inset_0_-1px_0_0_rgb(0_0_0_/_0.09)] dark:shadow-[inset_0_-1px_0_0_rgb(0_0_0_/_0.2)] group-active:shadow-none dark:group-active:shadow-none",
-          "border-border/82 from-secondary via-secondary to-secondary/86 dark:border-neutral-600/65 dark:from-neutral-600 dark:via-secondary dark:to-secondary/86",
-          "group-active:border-border/90 group-active:from-secondary group-active:via-secondary group-active:to-secondary/82 dark:group-active:from-neutral-700 dark:group-active:via-secondary dark:group-active:to-neutral-800",
+          "shadow-[inset_0_1px_0_0_rgb(255_255_255_/_0.85),inset_0_-1px_0_0_rgb(0_0_0_/_0.06)] dark:shadow-[inset_0_1px_0_0_rgb(255_255_255_/_0.12),inset_0_-1px_0_0_rgb(0_0_0_/_0.2)] group-active:shadow-[inset_0_1px_0_0_rgb(255_255_255_/_0.55)] dark:group-active:shadow-[inset_0_1px_0_0_rgb(255_255_255_/_0.08)]",
+          "border-border/80 from-white via-secondary to-neutral-100/90 dark:border-neutral-600/65 dark:from-neutral-600 dark:via-secondary dark:to-secondary/86",
+          "group-active:border-border/90 group-active:from-neutral-50 group-active:via-secondary group-active:to-neutral-100/85 dark:group-active:from-neutral-700 dark:group-active:via-secondary dark:group-active:to-neutral-800",
         ].join(" "),
       },
     },
@@ -197,12 +195,12 @@ const buttonVariants = cva(
           "before:bg-black/20 dark:before:bg-black/55",
         ].join(" "),
         secondary: [
-          "border border-border/80 bg-gradient-to-b from-secondary via-secondary to-secondary/86 text-secondary-foreground dark:border-neutral-600/60 dark:from-neutral-600 dark:via-secondary dark:to-secondary/86",
-          "shadow-[0_1px_2px_rgb(0_0_0_/_0.08),0_2px_8px_rgb(0_0_0_/_0.07),0_4px_14px_rgb(0_0_0_/_0.05),inset_0_-1px_0_0_rgb(0_0_0_/_0.09)] dark:shadow-[0_1px_2px_rgb(0_0_0_/_0.45),0_2px_10px_rgb(0_0_0_/_0.3),inset_0_-1px_0_0_rgb(0_0_0_/_0.2)]",
-          "hover:from-secondary hover:via-secondary hover:to-secondary/82 dark:hover:from-neutral-600",
-          "active:from-secondary active:via-secondary active:to-secondary/80 dark:active:from-neutral-700 dark:active:to-neutral-800",
-          "active:shadow-[0_1px_1px_rgb(0_0_0_/_0.06)] dark:active:shadow-[0_1px_2px_rgb(0_0_0_/_0.3)]",
-          "before:bg-black/20 dark:before:bg-black/55",
+          "border border-border/75 bg-gradient-to-b from-white via-secondary to-neutral-100/90 text-muted-foreground dark:border-neutral-600/60 dark:from-neutral-600 dark:via-secondary dark:to-secondary/86",
+          "shadow-[0_1px_0_0_rgb(255_255_255_/_0.6),0_1px_2px_rgb(0_0_0_/_0.06),0_3px_10px_rgb(0_0_0_/_0.05),0_5px_16px_rgb(0_0_0_/_0.04),inset_0_1px_0_0_rgb(255_255_255_/_0.75),inset_0_-1px_0_0_rgb(0_0_0_/_0.06)] dark:shadow-[0_1px_2px_rgb(0_0_0_/_0.45),0_2px_10px_rgb(0_0_0_/_0.3),inset_0_-1px_0_0_rgb(0_0_0_/_0.2)]",
+          "hover:from-neutral-50 hover:via-secondary hover:to-neutral-100/85 dark:hover:from-neutral-600",
+          "active:from-neutral-100 active:via-secondary active:to-neutral-200/80 dark:active:from-neutral-700 dark:active:to-neutral-800",
+          "active:shadow-[0_1px_1px_rgb(0_0_0_/_0.05),inset_0_1px_0_0_rgb(255_255_255_/_0.45)] dark:active:shadow-[0_1px_2px_rgb(0_0_0_/_0.3)]",
+          "before:bg-neutral-300/40 dark:before:bg-black/55",
         ].join(" "),
         ghost: [
           "before:hidden",

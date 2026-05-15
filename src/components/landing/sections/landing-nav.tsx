@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Gamepad2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -70,6 +71,7 @@ export function LandingNav() {
           }}
         >
           شروع بازی
+          <Gamepad2 size={36} color="white" className="size-6" />
         </Button>
       </div>
     </header>

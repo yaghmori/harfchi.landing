@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -108,15 +108,14 @@ function StickyTestimonialCard({
             className="size-14 shrink-0 rounded-xl object-cover"
           />
           <div className="min-w-0 flex-1 text-start">
-            <p className="text-lg font-bold text-[#1e1b4b]">{testimonial.name}</p>
+            <p className="text-lg font-bold text-[#1e1b4b]">
+              {testimonial.name}
+            </p>
             <p className="text-sm text-slate-500">{testimonial.region}</p>
           </div>
         </div>
 
-        <div
-          className="my-4 flex items-center gap-2"
-          dir="ltr"
-        >
+        <div className="my-4 flex items-center gap-2" dir="ltr">
           <span className="text-base font-bold text-[#1e1b4b]">
             {formatRatingFa(testimonial.rating)}
           </span>
@@ -188,7 +187,7 @@ export function LandingTestimonialsSection() {
                 type="button"
                 variant="outline"
                 size="lg"
-                className="border-white/40 bg-transparent font-bold text-white hover:bg-white/10 hover:text-white"
+                className="border-white/40 bg-transparent font-bold text-foreground hover:bg-white/10"
                 onClick={() => scrollToId("features")}
               >
                 امکانات بازی
