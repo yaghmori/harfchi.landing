@@ -8,12 +8,14 @@ import { LandingTestimonialsSection } from "./sections/landing-testimonials-sect
 
 type HarfchiLandingProps = {
   cafeBazaarUrl?: string;
+  myketUrl?: string;
   sibcheUrl?: string;
   pwaPlayUrl?: string;
 };
 
 export function HarfchiLanding({
   cafeBazaarUrl,
+  myketUrl,
   sibcheUrl,
   pwaPlayUrl,
 }: HarfchiLandingProps) {
@@ -29,6 +31,7 @@ export function HarfchiLanding({
       <LandingTestimonialsSection />
       <LandingDownloadSection
         cafeBazaarUrl={cafeBazaarUrl}
+        myketUrl={myketUrl}
         sibcheUrl={sibcheUrl}
         pwaPlayUrl={pwaPlayUrl}
       />

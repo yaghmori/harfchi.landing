@@ -4,6 +4,7 @@ import { DownloadPlatformLogo } from "../download/download-platform-logo";
 import {
   AndroidDirectIcon,
   CafeBazaarIcon,
+  MyketIcon,
   PwaWebIcon,
   SibcheIcon,
 } from "../download/store-icons";
@@ -14,6 +15,7 @@ type PlatformVariant = "android" | "ios" | "web";
 
 type LandingDownloadSectionProps = {
   cafeBazaarUrl?: string;
+  myketUrl?: string;
   sibcheUrl?: string;
   pwaPlayUrl?: string;
 };
@@ -47,6 +49,7 @@ function PlatformColumn({
 
 export function LandingDownloadSection({
   cafeBazaarUrl,
+  myketUrl,
   sibcheUrl,
   pwaPlayUrl = DEFAULT_PWA_PLAY_URL,
 }: LandingDownloadSectionProps) {
@@ -62,7 +65,7 @@ export function LandingDownloadSection({
             id="download-heading"
             className="font-heading text-2xl font-extrabold text-foreground sm:text-3xl md:text-4xl"
           >
-            دانلود اپلیکیشن حرف چی
+            دانلود بازی حرف چی
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
             اندروید، iOS یا نسخهٔ وب (PWA) — هر کدام را که می‌خواهید انتخاب
@@ -84,6 +87,13 @@ export function LandingDownloadSection({
                 icon={<CafeBazaarIcon />}
                 external={Boolean(cafeBazaarUrl)}
                 disabled={!cafeBazaarUrl}
+              />
+              <DownloadChannelButton
+                href={myketUrl ?? "#"}
+                label="دانلود از مایکت"
+                icon={<MyketIcon />}
+                external={Boolean(myketUrl)}
+                disabled={!myketUrl}
               />
             </PlatformColumn>
 

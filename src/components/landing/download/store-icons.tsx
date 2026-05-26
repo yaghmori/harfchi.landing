@@ -3,7 +3,8 @@ import { AppWindow, Download } from "lucide-react";
 import Image from "next/image";
 import { downloadIcons } from "./download-icons";
 
-const brandIconClass = "h-8 w-auto max-w-10 object-contain sm:h-9 sm:max-w-11";
+const brandIconClass =
+  "h-9 w-9 shrink-0 rounded-md object-contain sm:h-10 sm:w-10";
 
 const lucideIconClass = "max-w-6 max-h-6 shrink-0 size-6";
 
@@ -12,9 +13,9 @@ export function AndroidStoreIcon() {
     <Image
       src={downloadIcons.android}
       alt=""
-      width={32}
-      height={28}
-      className={cn(brandIconClass, "max-w-12")}
+      width={36}
+      height={36}
+      className={brandIconClass}
       aria-hidden
     />
   );
@@ -29,9 +30,9 @@ export function CafeBazaarIcon() {
     <Image
       src={downloadIcons.bazaar}
       alt=""
-      width={48}
-      height={24}
-      className={cn(brandIconClass, "max-w-12 sm:max-w-14")}
+      width={36}
+      height={36}
+      className={brandIconClass}
       aria-hidden
     />
   );
@@ -42,9 +43,22 @@ export function SibcheIcon() {
     <Image
       src={downloadIcons.sibche}
       alt=""
-      width={72}
-      height={28}
-      className={cn(brandIconClass, "max-w-[4.5rem] sm:max-w-20")}
+      width={36}
+      height={36}
+      className={cn(brandIconClass, "p-1 sm:p-1.5")}
+      aria-hidden
+    />
+  );
+}
+
+export function MyketIcon() {
+  return (
+    <Image
+      src={downloadIcons.myket}
+      alt=""
+      width={36}
+      height={36}
+      className={cn(brandIconClass, "p-1 sm:p-1.5")}
       aria-hidden
     />
   );
