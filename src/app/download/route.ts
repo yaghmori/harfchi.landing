@@ -6,8 +6,19 @@ import {
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 const PROBE_TIMEOUT_MS = 5_000;
+
+// Headers that defeat every layer of caching between us and the user (browser,
+// proxies, CDNs). The download endpoint MUST be re-resolved on every click so
+// a stale 302 doesn't silently no-op.
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, max-age=0, must-revalidate",
+  Pragma: "no-cache",
+  Expires: "0",
+} as const;
 
 function unavailableHtml(reason: string): string {
   return `<!doctype html>
@@ -78,7 +89,7 @@ function unavailableResponse(reason: string, status: number): Response {
     status,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "no-store",
+      ...NO_STORE_HEADERS,
     },
   });
 }
@@ -119,5 +130,12 @@ export async function GET() {
     );
   }
 
-  return NextResponse.redirect(target, 302);
+  // Append a per-request cache-buster so the browser can never fulfil this
+  // navigation from a previously cached 302 → APK pair.
+  const fresh = new URL(target);
+  fresh.searchParams.set("t", Date.now().toString(36));
+
+  const res = NextResponse.redirect(fresh, 302);
+  for (const [k, v] of Object.entries(NO_STORE_HEADERS)) res.headers.set(k, v);
+  return res;
 }
