@@ -7,6 +7,12 @@ type DownloadChannelButtonProps = {
   label: string;
   icon: ReactNode;
   external?: boolean;
+  /**
+   * Render as a plain `<a download>` (no `next/link`, no `target=_blank`).
+   * Use for direct file downloads so each click triggers a fresh navigation
+   * to the route handler instead of a client-side router transition.
+   */
+  download?: boolean | string;
   disabled?: boolean;
 };
 
@@ -15,6 +21,7 @@ export function DownloadChannelButton({
   label,
   icon,
   external = false,
+  download = false,
   disabled = false,
 }: DownloadChannelButtonProps) {
   const content = (
@@ -28,28 +35,35 @@ export function DownloadChannelButton({
     </div>
   );
 
-  if (external) {
+  const wrapperClassName = disabled
+    ? "pointer-events-none block w-full opacity-50"
+    : "block w-full";
+
+  const buttonInner = (
+    <Button
+      variant="outline"
+      size="lg"
+      className="w-full font-bold text-foreground hover:bg-white/10"
+      disabled={disabled}
+    >
+      {content}
+    </Button>
+  );
+
+  if (external || download) {
     return (
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
+        download={
+          download === true ? "" : typeof download === "string" ? download : undefined
+        }
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : undefined}
-        className={
-          disabled
-            ? "pointer-events-none block w-full opacity-50"
-            : "block w-full"
-        }
+        className={wrapperClassName}
       >
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full font-bold text-foreground hover:bg-white/10"
-          disabled={disabled}
-        >
-          {content}
-        </Button>
+        {buttonInner}
       </a>
     );
   }
@@ -59,20 +73,9 @@ export function DownloadChannelButton({
       href={href}
       aria-disabled={disabled}
       tabIndex={disabled ? -1 : undefined}
-      className={
-        disabled
-          ? "pointer-events-none block w-full opacity-50"
-          : "block w-full"
-      }
+      className={wrapperClassName}
     >
-      <Button
-        variant="outline"
-        size="lg"
-        className="w-full font-bold text-foreground hover:bg-white/10"
-        disabled={disabled}
-      >
-        {content}
-      </Button>
+      {buttonInner}
     </Link>
   );
 }
