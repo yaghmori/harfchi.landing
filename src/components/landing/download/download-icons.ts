@@ -4,5 +4,6 @@ export const downloadIcons = {
   androidDirect: "/icons/android-logo.svg",
   ios: "/icons/IOS_logo.svg",
   bazaar: "/icons/bazzar-logo.png",
+  myket: "/icons/myket.webp",
   sibche: "/icons/sibche-logo.jpg",
 } as const;

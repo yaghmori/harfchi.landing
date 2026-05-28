@@ -1,35 +1,24 @@
-import fs from "node:fs";
-import path from "node:path";
+const APK_PATH = "/api/download/apk";
 
-const DEFAULT_RELATIVE_PATH = "downloads/harfchi.apk";
-
-export type AppDownloadFile = {
-  filePath: string;
-  fileName: string;
-  size: number;
-};
-
-export function getAppDownloadConfig(): { filePath: string; fileName: string } {
-  const configuredPath = process.env.APP_DOWNLOAD_PATH ?? DEFAULT_RELATIVE_PATH;
-  const filePath = path.isAbsolute(configuredPath)
-    ? configuredPath
-    : path.join(process.cwd(), configuredPath);
-  const fileName =
-    process.env.APP_DOWNLOAD_FILENAME ?? path.basename(filePath);
-
-  return { filePath, fileName };
+function normalizeOrigin(raw: string): string {
+  return raw.trim().replace(/\/+$/, "").replace(/\/api$/i, "");
 }
 
-export function getAppDownloadFile(): AppDownloadFile | null {
-  const { filePath, fileName } = getAppDownloadConfig();
-
+/**
+ * Resolve the absolute URL of the APK download endpoint exposed by the API.
+ *
+ * Reads `API_URL` (server-only) first, then falls back to
+ * `NEXT_PUBLIC_API_URL`. Either value should be the API origin (e.g.
+ * `https://api.harfchi.ir`); a trailing `/api` is tolerated and stripped to
+ * match the convention used by the mobile and other clients.
+ */
+export function getApkDownloadUrl(): string | null {
+  const raw =
+    process.env.API_URL?.trim() || process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (!raw) return null;
   try {
-    const stat = fs.statSync(filePath);
-    if (!stat.isFile()) {
-      return null;
-    }
-
-    return { filePath, fileName, size: stat.size };
+    const origin = normalizeOrigin(raw);
+    return new URL(APK_PATH, `${origin}/`).toString();
   } catch {
     return null;
   }

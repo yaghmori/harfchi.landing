@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = createHomeMetadata();
 
 const cafeBazaarUrl = process.env.NEXT_PUBLIC_CAFE_BAZAAR_URL;
+const myketUrl = process.env.NEXT_PUBLIC_MYKET_URL;
 const sibcheUrl = process.env.NEXT_PUBLIC_SIBCHE_URL;
 const pwaPlayUrl =
   process.env.NEXT_PUBLIC_PWA_PLAY_URL ?? "https://play.harfchi.ir";
@@ -17,6 +18,7 @@ export default function HomePage() {
       <JsonLd data={createHomeJsonLd()} />
       <HarfchiLanding
         cafeBazaarUrl={cafeBazaarUrl}
+        myketUrl={myketUrl}
         sibcheUrl={sibcheUrl}
         pwaPlayUrl={pwaPlayUrl}
       />
