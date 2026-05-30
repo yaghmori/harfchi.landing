@@ -89,6 +89,11 @@ function unavailableResponse(reason: string, status: number): Response {
     status,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
+      // Force the browser to render this page in-place rather than save it.
+      // Without this, a link that *used* to carry `download="harfchi.apk"`
+      // (e.g. a cached/prefetched HTML page on an older client) would cause
+      // mobile browsers to save the error page as `harfchi.apk.html`.
+      "Content-Disposition": "inline",
       ...NO_STORE_HEADERS,
     },
   });

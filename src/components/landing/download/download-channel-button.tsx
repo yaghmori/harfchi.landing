@@ -8,11 +8,20 @@ type DownloadChannelButtonProps = {
   icon: ReactNode;
   external?: boolean;
   /**
-   * Render as a plain `<a download>` (no `next/link`, no `target=_blank`).
-   * Use for direct file downloads so each click triggers a fresh navigation
-   * to the route handler instead of a client-side router transition.
+   * Render as a plain `<a>` that performs a fresh full-page navigation to the
+   * download route handler (no `next/link` prefetch, no client-side
+   * transition, no `target=_blank`).
+   *
+   * IMPORTANT: we intentionally do NOT set the HTML `download` attribute. The
+   * route may respond with either a 302 to the actual APK (the API supplies
+   * `Content-Disposition: attachment; filename="harfchi.apk"`) or with an
+   * HTML fallback when the file isn't available. Combining `download="..."`
+   * with an HTML fallback causes mobile browsers (Chrome on Android in
+   * particular) to save the error page as `harfchi.apk.html`. Letting the
+   * server-side `Content-Disposition` header decide is both correct and
+   * cross-origin-safe.
    */
-  download?: boolean | string;
+  directDownload?: boolean;
   disabled?: boolean;
 };
 
@@ -21,7 +30,7 @@ export function DownloadChannelButton({
   label,
   icon,
   external = false,
-  download = false,
+  directDownload = false,
   disabled = false,
 }: DownloadChannelButtonProps) {
   const content = (
@@ -50,15 +59,12 @@ export function DownloadChannelButton({
     </Button>
   );
 
-  if (external || download) {
+  if (external || directDownload) {
     return (
       <a
         href={href}
         target={external ? "_blank" : undefined}
-        rel={external ? "noopener noreferrer" : undefined}
-        download={
-          download === true ? "" : typeof download === "string" ? download : undefined
-        }
+        rel={external ? "noopener noreferrer" : "noopener"}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : undefined}
         className={wrapperClassName}

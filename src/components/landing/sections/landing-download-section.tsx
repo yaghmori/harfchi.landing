@@ -80,7 +80,7 @@ export function LandingDownloadSection({
                 href="/download"
                 label="دانلود مستقیم"
                 icon={<AndroidDirectIcon />}
-                download="harfchi.apk"
+                directDownload
               />
               <DownloadChannelButton
                 href={cafeBazaarUrl ?? "#"}
